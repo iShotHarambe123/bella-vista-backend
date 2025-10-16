@@ -1,0 +1,6 @@
+node_modules/
+database/bella_vista.db
+.env
+*.log
+.DS_Store
+Thumbs.db
