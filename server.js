@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 
+// Databas
+const { initDatabase } = require('./config/database');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -25,6 +28,10 @@ app.get('/api/health', (req, res) => {
 });
 
 // Starta server
-app.listen(PORT, () => {
-    console.log(`Server körs på port ${PORT}`);
+initDatabase().then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server körs på port ${PORT}`);
+    });
+}).catch(err => {
+    console.error('Kunde inte starta server:', err);
 });
