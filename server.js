@@ -3,6 +3,7 @@ const cors = require('cors');
 
 // Routes
 const authRoutes = require('./routes/auth');
+const categoryRoutes = require('./routes/categories');
 
 // Databas
 const { initDatabase } = require('./config/database');
@@ -27,6 +28,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/categories', categoryRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
