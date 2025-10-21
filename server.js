@@ -5,6 +5,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const categoryRoutes = require('./routes/categories');
 const menuRoutes = require('./routes/menu');
+const reservationRoutes = require('./routes/reservations');
 
 // Databas
 const { initDatabase } = require('./config/database');
@@ -31,6 +32,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/menu', menuRoutes);
+app.use('/api/reservations', reservationRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
