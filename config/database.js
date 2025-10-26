@@ -2,7 +2,6 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const bcrypt = require('bcryptjs');
 
-// Använd /tmp för Render deployment, annars lokal mapp
 const DB_PATH = process.env.NODE_ENV === 'production'
     ? '/tmp/bella_vista.db'
     : path.join(__dirname, '../database/bella_vista.db');
@@ -147,26 +146,34 @@ async function createDefaultData() {
             db.get('SELECT COUNT(*) as count FROM menu_items', [], (err, result) => {
                 if (!err && result.count === 0) {
                     const menuItems = [
-                        { name: 'Bruschetta', description: 'Rostade bröd med tomater', price: 95, category_id: 1 },
-                        { name: 'Spaghetti Carbonara', description: 'Pasta med ägg och bacon', price: 185, category_id: 2 },
-                        { name: 'Osso Buco', description: 'Kalvskank med risotto', price: 295, category_id: 3 },
-                        { name: 'Tiramisu', description: 'Klassisk italiensk dessert', price: 95, category_id: 4 }
+                        { name: 'Bruschetta', description: 'Rostade bröd med tomater', price: 95, category_name: 'Antipasti' },
+                        { name: 'Spaghetti Carbonara', description: 'Pasta med ägg och bacon', price: 185, category_name: 'Primi Piatti' },
+                        { name: 'Osso Buco', description: 'Kalvskank med risotto', price: 295, category_name: 'Secondi Piatti' },
+                        { name: 'Tiramisu', description: 'Klassisk italiensk dessert', price: 95, category_name: 'Dolci' }
                     ];
 
                     menuItems.forEach(item => {
-                        db.run(
-                            `INSERT INTO menu_items (name, description, price, category_id) VALUES (?, ?, ?, ?)`,
-                            [item.name, item.description, item.price, item.category_id],
-                            (err) => {
-                                if (err) console.error('Fel vid skapande av menyrätt:', err);
-                                else console.log(`Menyrätt skapad: ${item.name}`);
+                        // Hitta kategori-ID baserat på namn
+                        db.get('SELECT id FROM categories WHERE name = ?', [item.category_name], (err, category) => {
+                            if (err || !category) {
+                                console.error(`Kunde inte hitta kategori: ${item.category_name}`);
+                                return;
                             }
-                        );
+
+                            db.run(
+                                `INSERT INTO menu_items (name, description, price, category_id) VALUES (?, ?, ?, ?)`,
+                                [item.name, item.description, item.price, category.id],
+                                (err) => {
+                                    if (err) console.error('Fel vid skapande av menyrätt:', err);
+                                    else console.log(`Menyrätt skapad: ${item.name} i kategori ${item.category_name}`);
+                                }
+                            );
+                        });
                     });
                 }
                 resolve();
             });
-        }, 100);
+        }, 200);
     });
 }
 
