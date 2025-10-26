@@ -2,7 +2,10 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const bcrypt = require('bcryptjs');
 
-const DB_PATH = path.join(__dirname, '../database/bella_vista.db');
+// Använd /tmp för Render deployment, annars lokal mapp
+const DB_PATH = process.env.NODE_ENV === 'production'
+    ? '/tmp/bella_vista.db'
+    : path.join(__dirname, '../database/bella_vista.db');
 
 const db = new sqlite3.Database(DB_PATH, (err) => {
     if (err) {
