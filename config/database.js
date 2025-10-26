@@ -18,6 +18,15 @@ async function initDatabase() {
     return new Promise((resolve, reject) => {
         db.serialize(async () => {
             try {
+                // Rensa databas om RESET_DATABASE är satt
+                if (process.env.RESET_DATABASE === 'true') {
+                    console.log('🔄 Rensar databas...');
+                    db.run('DROP TABLE IF EXISTS menu_items');
+                    db.run('DROP TABLE IF EXISTS categories');
+                    db.run('DROP TABLE IF EXISTS reservations');
+                    db.run('DROP TABLE IF EXISTS users');
+                }
+
                 // Skapa tabeller
                 db.run(`
                     CREATE TABLE IF NOT EXISTS users (
