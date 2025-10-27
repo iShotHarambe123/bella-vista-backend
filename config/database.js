@@ -155,10 +155,29 @@ async function createDefaultData() {
             db.get('SELECT COUNT(*) as count FROM menu_items', [], (err, result) => {
                 if (!err && result.count === 0) {
                     const menuItems = [
-                        { name: 'Bruschetta', description: 'Rostade bröd med tomater', price: 95, category_name: 'Antipasti' },
-                        { name: 'Spaghetti Carbonara', description: 'Pasta med ägg och bacon', price: 185, category_name: 'Primi Piatti' },
-                        { name: 'Osso Buco', description: 'Kalvskank med risotto', price: 295, category_name: 'Secondi Piatti' },
-                        { name: 'Tiramisu', description: 'Klassisk italiensk dessert', price: 95, category_name: 'Dolci' }
+                        // Antipasti (Förrätter)
+                        { name: 'Bruschetta', description: 'Rostade bröd med tomater, basilika och vitlök', price: 95, category_name: 'Antipasti' },
+                        { name: 'Antipasto Misto', description: 'Blandad italiensk charkuteritallrik med ost', price: 145, category_name: 'Antipasti' },
+                        { name: 'Carpaccio di Manzo', description: 'Tunnslickat nötkött med rucola och parmesan', price: 135, category_name: 'Antipasti' },
+                        { name: 'Caprese', description: 'Mozzarella, tomater och basilika med balsamico', price: 115, category_name: 'Antipasti' },
+
+                        // Primi Piatti (Pasta och risotto)
+                        { name: 'Spaghetti Carbonara', description: 'Pasta med ägg, bacon och parmesan', price: 185, category_name: 'Primi Piatti' },
+                        { name: 'Penne Arrabbiata', description: 'Pasta med kryddig tomatsås och chili', price: 165, category_name: 'Primi Piatti' },
+                        { name: 'Risotto ai Funghi', description: 'Krämig svamprisotto med parmesanost', price: 195, category_name: 'Primi Piatti' },
+                        { name: 'Lasagne della Casa', description: 'Hemlagad lasagne med köttfärs och bechamelsås', price: 205, category_name: 'Primi Piatti' },
+
+                        // Secondi Piatti (Huvudrätter)
+                        { name: 'Osso Buco', description: 'Kalvskank med risotto milanese', price: 295, category_name: 'Secondi Piatti' },
+                        { name: 'Scaloppine al Limone', description: 'Kalvschnitzel med citron och kapris', price: 275, category_name: 'Secondi Piatti' },
+                        { name: 'Branzino al Sale', description: 'Havsbass bakad i salt med örter', price: 285, category_name: 'Secondi Piatti' },
+                        { name: 'Pollo alla Parmigiana', description: 'Kyckling med tomatsås och mozzarella', price: 245, category_name: 'Secondi Piatti' },
+
+                        // Dolci (Efterrätter)
+                        { name: 'Tiramisu', description: 'Klassisk italiensk dessert med kaffe och mascarpone', price: 95, category_name: 'Dolci' },
+                        { name: 'Panna Cotta', description: 'Krämig vaniljdessert med bärsås', price: 85, category_name: 'Dolci' },
+                        { name: 'Cannoli Siciliani', description: 'Sicilianska rör fyllda med ricottakräm', price: 105, category_name: 'Dolci' },
+                        { name: 'Gelato Misto', description: 'Tre kulor italiensk glass efter val', price: 75, category_name: 'Dolci' }
                     ];
 
                     menuItems.forEach(item => {
